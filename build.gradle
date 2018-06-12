@@ -1,4 +1,3 @@
-apply from: "./libraries.gradle"
 group 'com.jack'
 version '1.0-SNAPSHOT'
 
