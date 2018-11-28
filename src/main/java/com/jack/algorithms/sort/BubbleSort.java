@@ -4,6 +4,9 @@ import com.alibaba.fastjson.JSON;
 
 /**
  * 冒泡排序
+ *
+ * http://www.zhuxingsheng.com/blog/algorithmic-slag-sort-bubble.html
+ *
  * Created by Jack on 2018/10/30.
  */
 public class BubbleSort {
