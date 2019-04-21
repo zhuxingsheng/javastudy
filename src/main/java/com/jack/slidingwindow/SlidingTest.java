@@ -7,6 +7,14 @@ public class SlidingTest {
 
     public static void main(String[]arg) {
 
+        System.out.println(System.currentTimeMillis()/1000);
+        System.out.println(System.currentTimeMillis()/1000);
+        System.out.println(System.currentTimeMillis()/1000);
+        System.out.println(System.currentTimeMillis()/1000);
+        System.out.println(System.currentTimeMillis()/1000);
+        System.out.println(System.currentTimeMillis()/1000);
+        System.out.println(System.currentTimeMillis());
+
             int currentIndex = 6;
 
             long sum = 0;
@@ -16,5 +24,8 @@ public class SlidingTest {
                 int index = ((currentIndex + ringWindow) -i) % ringWindow;
                 System.out.println(index);
         }
+
+
     }
+
 }

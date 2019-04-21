@@ -1,12 +1,17 @@
 package com.jack.slidingwindow;
 
+import com.google.common.cache.CacheBuilder;
+import com.google.common.cache.CacheLoader;
+import com.google.common.cache.LoadingCache;
 import com.google.common.util.concurrent.RateLimiter;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicLong;
 
 /**
  * Created by jack01.zhu on 2018/6/8.
@@ -51,6 +56,32 @@ public class GuavaRateLimiter {
             executorService.execute(task);
         }
         executorService.shutdown();
+
+    }
+
+
+
+    private LoadingCache<Long, AtomicLong> counter =
+            CacheBuilder.newBuilder()
+                    .expireAfterWrite(2, TimeUnit.SECONDS)
+                    .build(new CacheLoader<Long, AtomicLong>() {
+                        @Override
+                        public AtomicLong load(Long seconds) throws Exception {
+                            return new AtomicLong(0);
+                        }
+                    });
+
+    public static long permit = 50;
+
+    public boolean getData() throws ExecutionException {
+
+        //得到当前秒
+        long currentSeconds = System.currentTimeMillis() / 1000;
+        if(counter.get(currentSeconds).incrementAndGet() > permit) {
+            return false;
+        }
+        //业务处理
+        return true;
 
     }
 
