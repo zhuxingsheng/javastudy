@@ -1,2 +1,3 @@
 rootProject.name = 'studyjava'
+include 'rpc-study'
 

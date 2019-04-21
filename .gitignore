@@ -1,2 +1,4 @@
 /.gradle
 /.idea
+*.bak
+/src/main/java/com/jack/algorithms/sort/*.bak
