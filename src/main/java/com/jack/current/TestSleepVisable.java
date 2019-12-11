@@ -1,7 +1,7 @@
 package com.jack.current;
 
 public class TestSleepVisable {
-    volatile boolean b = true;
+    boolean b = true;
 
     public static void main(String[] args) throws InterruptedException {
         TestSleepVisable t = new TestSleepVisable();
@@ -10,7 +10,7 @@ public class TestSleepVisable {
     }
 
     private void test(){
-        new Thread(() -> {
+        Thread t1 = new Thread(() -> {
             System.out.println(Thread.currentThread().getName() + "开始");
             while (b) {
 //                 下面这个sleep会解决可见性问题
@@ -19,10 +19,12 @@ public class TestSleepVisable {
 //                } catch (InterruptedException e) {
 //                    e.printStackTrace();
 //                }
-                //Thread.yield();
+                Thread.yield();
             }
             System.out.println(Thread.currentThread().getName() + "结束");
-        }, "A").start();
+        }, "A");
+        t1.setPriority(10);
+        t1.start();
 
         try {
             Thread.sleep(100);
@@ -30,10 +32,12 @@ public class TestSleepVisable {
             e.printStackTrace();
         }
 
-        new Thread(() -> {
+        Thread t2 = new Thread(() -> {
             System.out.println(Thread.currentThread().getName() + "开始");
             b = false;
             System.out.println(Thread.currentThread().getName() + "结束");
-        }, "B").start();
+        }, "B");
+        t2.setPriority(1);
+        t2.start();
     }
 }
