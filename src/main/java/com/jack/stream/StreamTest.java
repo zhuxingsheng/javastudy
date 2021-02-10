@@ -2,13 +2,11 @@ package com.jack.stream;
 
 
 import com.google.common.collect.Lists;
+import org.junit.jupiter.api.Test;
 
-import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Optional;
 import java.util.stream.Stream;
-
-import static java.util.stream.Collectors.toList;
 
 /**
  * stream 学习
@@ -60,5 +58,43 @@ public class StreamTest {
 
         });
 
+    }
+
+
+    private Optional<String> op1(){
+        System.err.println("op1");
+        return Optional.of("op1");
+    }
+    private Optional<String> op2(){
+        System.err.println("op2");
+        return Optional.empty();
+    }
+    private Optional<String> op3(){
+        System.err.println("op3");
+        return Optional.of("op3");
+    }
+
+
+    @Test
+    public void testFilter(){
+        List<String> list = Lists.newArrayList("43","1","44","43232","3fds23","1","321dsa");
+
+        final Optional<String> any = list.stream().filter(s -> filter(s)).findAny();
+        System.err.println(any.get());
+
+
+        final Optional<String> stringOptional = Lists.newArrayList(op1(), op2(), op3()).stream().filter(Optional::isPresent).findAny().orElse(Optional.empty());
+        if(stringOptional.isPresent()) {
+            System.err.println(stringOptional.get());
+        }
+        final Optional<String> stringOptional1 = Stream.of(op1(), op2(), op3()).filter(Optional::isPresent).findAny().orElse(Optional.empty());
+        if(stringOptional1.isPresent()) {
+            System.err.println(stringOptional1.get());
+        }
+    }
+
+    private boolean filter(String str){
+        System.err.println(str);
+        return str.equals("1");
     }
 }

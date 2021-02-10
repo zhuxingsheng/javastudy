@@ -17,8 +17,22 @@ public class OptionalTest {
         System.err.println(x.orElse("else"));
         System.err.println(addressStr.orElse("else"));
 
+        Optional<String> o = Optional.of("b");
+
+        System.err.println(o.orElse(s()));
+        System.err.println(o.orElseGet(()->{
+            System.err.println("ss");
+            return "ss";}));
+        System.err.println(o);
+
 
     }
+
+    private static String s(){
+        System.err.println("s");
+        return "s";
+    }
+
 
 
 }
